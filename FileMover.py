@@ -22,6 +22,14 @@ def main():
 
 
 def getType():
+    """
+    Asks the user for the file type to be moved.
+
+    Attributes:
+        file_type: Name of the file extension
+
+    :return: File Type
+    """
     file_type = input("Which file format would you like to transfer?\n")
     confirmation = input(f"\"{file_type}\" selected, is this correct? (Y/N)").lower()
     if confirmation not in {"y", "yes"}:
@@ -30,6 +38,14 @@ def getType():
 
 
 def getOrigin():
+    """
+    Asks the user for the directory which the files are to be moved from.
+
+    Attributes:
+        origin: Name of the originating file directory
+
+    :return: The originating file directory
+    """
     origin = input("From which directory?\n")
     confirmation = input(f"Moving from \"{origin}\", is this correct? (Y/N)").lower()
     if confirmation not in {"y", "yes"}:
@@ -38,6 +54,14 @@ def getOrigin():
 
 
 def getDestination():
+    """
+    Asks the user for the directory which the files are to be moved to.
+
+    Attributes:
+        destination: Name of the terminus file directory.
+
+    :return: The terminus file directory
+    """
     destination = input("To which directory?\n")
     confirmation = input(f"Moving to \"{destination}\", is this correct? (Y/N)").lower()
     if confirmation not in {"y", "yes"}:
@@ -45,12 +69,27 @@ def getDestination():
     return destination
 
 
-def move(filename, origin, destination):
-    shutil.move(origin + "/" + filename, destination)
-    print(f"{filename} was moved from {origin} to {destination}")
+def move(file_name, origin, destination):
+    """
+    Moves a file from a specified directory to another.
+
+    :param file_name: The file to be moved
+    :param origin: The directory where the file is currently stored
+    :param destination: The directory where the file is to be moved to
+
+    :return: None
+    """
+    shutil.move(origin + "/" + file_name, destination)
+    print(f"{file_name} was moved from {origin} to {destination}")
 
 
 def searchDirectory(directory):
+    """
+    Searches through a specified directory and lists its children.
+
+    :param directory: The directory to be searched
+    :return: None
+    """
     for root, dirs, files in os.walk(directory):
         for file in files:
             print(os.path.join(root, file))
