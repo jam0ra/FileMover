@@ -9,6 +9,40 @@ import shutil
 
 
 def main():
+    options = {
+        2: move
+    }
+    options[menu()]()
+
+
+def menu():
+    """
+    Generates a menu of all the functions of this program.
+
+    :return: The desired function to run.
+    """
+
+    options = ["Move a single file", "Move multiple files"]
+    while True:
+        print("What would you like do to?")
+        for i, option in enumerate(options):
+            print(str(i + 1) + ". " + option)
+        action = int(input())
+        if action in {1, 2}:
+            print(f"You selected {options[action - 1].lower()}, is this correct? (Y|N)")
+            proceed = input().lower()
+            if proceed in {"y", "yes"}:
+                return action
+        else:
+            print("Invalid entry. Please select a number from the menu.")
+    
+
+def move():
+    """
+    Moves files from one directory to another
+
+    :return: None
+    """
     file_type = getType()
     origin = getOrigin()
     destination = getDestination()
@@ -16,7 +50,7 @@ def main():
 
     for file in os.listdir(origin):
         if file.endswith(file_type):
-            move(file, origin, destination)
+            moveFile(file, origin, destination)
             count += 1
     print("Number of files moved:", count)
 
@@ -34,7 +68,7 @@ def getType():
     confirmation = input(f"\"{file_type}\" selected, is this correct? (Y/N)").lower()
     if confirmation not in {"y", "yes"}:
         getType()
-    return "." + file_type
+    return file_type if file_type[0] == "." else "." + file_type
 
 
 def getOrigin():
@@ -69,9 +103,9 @@ def getDestination():
     return destination
 
 
-def move(file_name, origin, destination):
+def moveFile(file_name, origin, destination):
     """
-    Moves a file from a specified directory to another.
+    Moves a single file from a specified directory to another.
 
     :param file_name: The file to be moved
     :param origin: The directory where the file is currently stored
