@@ -43,9 +43,26 @@ def move():
 
     :return: None
     """
+
     file_type = getType()
-    origin = getOrigin()
-    destination = getDestination()
+    while True:
+        try:
+            origin = getOrigin()
+            if not os.path.isdir(origin):
+                raise FileNotFoundError
+            break
+        except FileNotFoundError:
+            print(f"The system cannot find the path specified: \"{origin}\". Please try again.")
+
+    while True:
+        try:
+            destination = getDestination()
+            if not os.path.isdir(destination):
+                raise FileNotFoundError
+            break
+        except FileNotFoundError:
+            print(f"The system cannot find the path specified: \"{destination}\"")
+
     count = 0
 
     for file in os.listdir(origin):
